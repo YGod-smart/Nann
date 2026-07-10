@@ -1,1 +1,6 @@
-print("Hello World")
+
+from nann import Nann
+
+nann = Nann()
+
+nann.run()
