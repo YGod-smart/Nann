@@ -1,3 +1,4 @@
+from commands import handle_command
 
 class Nann:
     def __init__(self):
@@ -13,4 +14,6 @@ class Nann:
                 print("Nann: Shutting down...")
                 break
             
-            print(f"Nann: I received: {user_input}")
+            response = handle_command(user_input)
+            
+            print(f"Nann: {response}")
