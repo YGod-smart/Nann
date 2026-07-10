@@ -5,3 +5,12 @@ class Nann:
         
     def run(self):
         print(f"{self.name} is online")
+        
+        while True:
+            user_input = input("You: ")
+            
+            if user_input.lower() == "exit":
+                print("Nann: Shutting down...")
+                break
+            
+            print(f"Nann: I received: {user_input}")
