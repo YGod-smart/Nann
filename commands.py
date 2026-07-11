@@ -9,6 +9,14 @@ def handle_command(user_input, memory):
     elif user_input == "What is my name":
         return f"Your name is {memory.recall('name')}"
     
+    elif user_input.startswith("remember my age is "):
+        age = user_input.replace("remember my age is ", "")
+        memory.remember("age", age)
+        return "Okay I will remember your age!"
+    
+    elif user_input == "What is my age":
+        return f"Your age is {memory.recall('age')}"
+    
     elif user_input == "help":
         return "Available commands...\n- help\n- about\n- exit"
         

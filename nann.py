@@ -1,11 +1,12 @@
 from memory import Memory
 from commands import handle_command
-
+from brain import Brain
 
 class Nann:
     def __init__(self):
         self.name = "Nann"
         self.memory = Memory()
+        self.brain = Brain(self.memory)
         
     def run(self):
         print(f"{self.name} is online")
@@ -17,6 +18,6 @@ class Nann:
                 print("Nann: Shutting down...")
                 break
             
-            response = handle_command(user_input, self.memory)
+            response = self.brain.think(user_input)
             
             print(f"Nann: {response}")
