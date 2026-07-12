@@ -9,7 +9,7 @@ class Brain:
         self.memory = memory
         self.calculator = Calculator()
         self.clock = Clock()
-        self.note = Notes()
+        self.notes = Notes()
         
     def think(self, user_input):
         
@@ -27,9 +27,18 @@ class Brain:
         
         if user_input.lower().startswith("take note "):
             note = user_input[10:]
-            return self.note.add_note(note)
+            return self.notes.add_note(note)
         
         if user_input.lower() == "show notes":
-            return self.note.show_notes()
+            return self.notes.show_notes()
+        
+        if user_input.lower().startswith("delete note "):
+            
+            try:
+                number = int(user_input[12:])
+                return self.notes.delete_note(number)
+            
+            except ValueError:
+                return "Please enter a valid note number."
         
         return handle_command(user_input, self.memory)

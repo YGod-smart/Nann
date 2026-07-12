@@ -23,3 +23,12 @@ class Memory:
         
         except FileNotFoundError:
             self.memories = {}
+            
+    def forget(self, key):
+        if key in self.memories:
+            
+            del self.memories[key]
+            self.save()
+            return f"I forgot your {key}."
+        
+        return f"I dont know your {key}."
