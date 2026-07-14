@@ -43,3 +43,32 @@ class Notes:
             return f"Deleted note: {deleted}"
         
         return "Invalid note number."
+    
+    def can_handle(self, user_input):
+        user_input = user_input.lower()
+
+        return (
+            user_input.startswith("take note ")
+            or user_input == "show notes"
+            or user_input.startswith("delete note ")
+        )
+
+
+    def handle(self, user_input):
+        user_input = user_input.lower()
+
+        if user_input.startswith("take note "):
+            note = user_input[10:]
+            return self.add_note(note)
+
+        if user_input == "show notes":
+            return self.show_notes()
+
+        if user_input.startswith("delete note "):
+
+            try:
+                number = int(user_input[12:])
+                return self.delete_note(number)
+
+            except ValueError:
+                return "Please enter a valid note number."
