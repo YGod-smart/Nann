@@ -1,1 +1,1 @@
-OPENAI_API_KEY = "your-api-key-here"
+#OPENAI_API_KEY = "http://127.0.0.1:1234"
