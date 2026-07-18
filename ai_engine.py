@@ -1,4 +1,5 @@
 import requests
+import json
 
 class Ai:
     def __init__(self):
@@ -24,7 +25,7 @@ class Ai:
         
         You were created from scratch by your developer.
         
-        Your purpose is to be a trustworthy second brain that helps with programming, studying, productivity, notes, weather, and everyday tasks.
+        Your purpose is to be a trustworthy second brain that helps with programming, studying, productivity, notes, weather, everyday tasks, and almost anything the user ask.
         
         Your personality:
         - Friendly and calm.
@@ -82,5 +83,112 @@ class Ai:
         
         except Exception as e:
             return str(e)
+        
+    def understand(self, text):
+
+        url = "http://127.0.0.1:1234/v1/chat/completions"
+
+        headers = {
+            "Content-Type": "application/json"
+        }
+
+        messages = [
+            {
+                "role": "system",
+                "content": """
+    You are Nann's intent analyzer.
+
+    You NEVER answer the user.
+
+    Your ONLY job is to analyze the user's message and return JSON.
+
+    If the user wants you to remember personal information, return:
+
+    {
+        "intent":"remember",
+        "category":"personal or preference",
+        "key":"short_snake_case_key",
+        "value":"the value"
+    }
+
+    Examples:
+
+    User:
+    My favorite language is Python.
+
+    Output:
+    {
+        "intent":"remember",
+        "category":"preference",
+        "key":"favorite_language",
+        "value":"Python"
+    }
+
+    User:
+    I was born in Bagan.
+
+    Output:
+    {
+        "intent":"remember",
+        "category":"personal",
+        "key":"birthplace",
+        "value":"Bagan"
+    }
+
+    User:
+    My birthday is May 7.
+
+    Output:
+    {
+        "intent":"remember",
+        "category":"personal",
+        "key":"birthday",
+        "value":"May 7"
+    }
+
+    If the message is NOT something to remember, return ONLY:
+
+    {
+        "intent":"chat"
+    }
+
+    Return ONLY JSON.
+
+    Never explain.
+    Never use markdown.
+    Never add extra text.
+    """
+            },
+            {
+                "role": "user",
+                "content": text
+            }
+        ]
+
+        data = {
+            "model": "local-model",
+            "messages": messages,
+            "temperature": 0
+        }
+
+        try:
+
+            response = requests.post(
+                url,
+                headers=headers,
+                json=data
+            )
+
+            result = response.json()
+
+            return json.loads(
+                result["choices"][0]["message"]["content"]
+            )
+
+        except Exception:
+
+            return {
+                "intent": "chat"
+            }   
         
 

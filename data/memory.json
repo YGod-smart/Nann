@@ -1,4 +1,7 @@
-{
-    "name": "YGod",
-    "age": "19"
-}
+[
+    {
+        "category": "preference",
+        "key": "favorite_language",
+        "value": "Python"
+    }
+]
