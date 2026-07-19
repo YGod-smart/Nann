@@ -69,3 +69,12 @@ class Memory:
 
         except json.JSONDecodeError:
             self.memories = []
+            
+    def search(self, key):
+
+        for memory in self.memories:
+
+            if memory["key"] == key:
+                return memory
+
+        return None

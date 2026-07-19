@@ -157,6 +157,32 @@ class Ai:
     Never explain.
     Never use markdown.
     Never add extra text.
+    
+    If the user is asking about previously remembered information:
+
+    Example:
+
+    User:
+    What is my favorite language?
+
+    Output:
+
+    {
+        "intent":"recall",
+        "key":"favorite_language"
+    }
+
+Example:
+
+User:
+Where was I born?
+
+Output:
+
+{
+    "intent":"recall",
+    "key":"birthplace"
+}
     """
             },
             {

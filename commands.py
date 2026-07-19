@@ -21,7 +21,7 @@ def handle_command(user_input, memory):
         return "Available commands...\n- help\n- about\n- exit"
         
     elif user_input == "about":
-        return "Name: Nann\nVersion: 0.8\nDeveloper: YGod"
+        return "Name: Nann\nVersion: 0.9\nDeveloper: YGod"
     
     elif user_input.startswith("forget my "):
         key = user_input[10:]
