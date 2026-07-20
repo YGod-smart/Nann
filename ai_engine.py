@@ -172,17 +172,51 @@ class Ai:
         "key":"favorite_language"
     }
 
-Example:
+    Example:
 
-User:
-Where was I born?
+    User:
+    Where was I born?
 
-Output:
+    Output:
 
-{
-    "intent":"recall",
-    "key":"birthplace"
-}
+    {
+        "intent":"recall",
+        "key":"birthplace"
+    }
+    
+    If the user asks about weather:
+
+    User:
+    What is the weather in Tokyo?
+
+    Output:
+
+    {
+        "intent": "weather",
+        "city": "Tokyo"
+    }
+
+    User:
+    Will it rain in Yangon today?
+
+    Output:
+
+    {
+        "intent": "weather",
+        "city": "Yangon"
+    }
+    
+    If the user wants to search the internet:
+
+    User:
+    Search Python decorators
+
+    Output:
+
+    {
+        "intent": "internet",
+        "query": "Python decorators"
+    }
     """
             },
             {
