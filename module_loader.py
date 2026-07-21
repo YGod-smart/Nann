@@ -1,10 +1,14 @@
 import os
 import importlib
+from tool_registry import ToolRegistry
+
 
 class ModuleLoader:
 
     def __init__(self):
-        self.modules = {}
+
+        self.registry = ToolRegistry()
+
 
     def load_modules(self):
 
@@ -20,14 +24,25 @@ class ModuleLoader:
                     f"modules.{module_name}"
                 )
 
+
                 class_name = module_name.capitalize()
 
-                module_class = getattr(module, class_name)
+                module_class = getattr(
+                    module,
+                    class_name
+                )
+
 
                 module_object = module_class()
 
-                self.modules[module_name] = module_object
+
+                self.registry.register(
+                    module_name,
+                    module_object
+                )
+
 
                 print(f"Loaded: {module_name}")
 
-        return self.modules
+
+        return self.registry

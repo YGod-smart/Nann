@@ -1,0 +1,47 @@
+[
+    {
+        "role": "user",
+        "message": "weather Yangon",
+        "time": "2026-07-21 13:19:01"
+    },
+    {
+        "role": "user",
+        "message": "weather Yangon",
+        "time": "2026-07-21 13:21:42"
+    },
+    {
+        "role": "user",
+        "message": "remember my test is working",
+        "time": "2026-07-21 13:22:14"
+    },
+    {
+        "role": "assistant",
+        "message": "I'll remember that your test is working is true.",
+        "time": "2026-07-21 13:23:03"
+    },
+    {
+        "role": "user",
+        "message": "what is my test?",
+        "time": "2026-07-21 13:23:20"
+    },
+    {
+        "role": "user",
+        "message": "remember my test is working",
+        "time": "2026-07-21 13:26:16"
+    },
+    {
+        "role": "assistant",
+        "message": "I'll remember that your test is working is true.",
+        "time": "2026-07-21 13:26:27"
+    },
+    {
+        "role": "user",
+        "message": "what is my test?",
+        "time": "2026-07-21 13:26:48"
+    },
+    {
+        "role": "assistant",
+        "message": "I think there might be a bit of confusion here. You mentioned earlier that your test is working, which means it's already been run and passed, right? \n\nIf you're asking about the purpose or result of the test, I'm not entirely sure since we didn't discuss what the test was for in the first place. Could you please provide more context or information about what kind of test this is? That way, I can better assist you.",
+        "time": "2026-07-21 13:27:31"
+    }
+]

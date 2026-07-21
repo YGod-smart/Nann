@@ -11,6 +11,72 @@ class Ai:
     def handle(self, user_input):
         return self.ask(user_input)
     
+    def answer_normal(self, user_input, context):
+
+        prompt = f"""
+        You are Nann.
+
+        Known information about the user:
+
+        {context}
+
+        User:
+
+        {user_input}
+
+        Answer naturally.
+        """
+
+        return self.ask(prompt)
+
+
+    def answer_weather(self, user_input, weather_data):
+
+        prompt = f"""
+        You are Nann.
+
+        You already have the weather information below.
+
+        Do NOT say you don't have live weather.
+        Do NOT tell the user to check another website.
+        Do NOT mention limitations.
+
+        Weather Information:
+
+        {weather_data}
+
+        User Question:
+
+        {user_input}
+
+        Answer naturally.
+        """
+
+        return self.ask(prompt)
+
+
+    def answer_search(self, user_input, search_result):
+
+        prompt = f"""
+        You are Nann.
+
+        Search Result:
+
+        {search_result}
+
+        User Question:
+
+        {user_input}
+
+        Use ONLY the information above.
+
+        If the search failed, tell the user honestly.
+
+        Answer naturally.
+        """
+
+        return self.ask(prompt)
+    
     def ask(self, question):
         url = "http://127.0.0.1:1234/v1/chat/completions"
         

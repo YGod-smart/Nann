@@ -3,26 +3,40 @@ from commands import handle_command
 
 class Agent:
 
-    def __init__(self, ai, memory, modules):
+    def __init__(self, ai, memory, modules, conversation):
 
         self.ai = ai
         self.memory = memory
-        self.modules = modules
+        self.tools = modules
         self.context = ContextBuilder(memory)
+        self.conversation = conversation
+        
+    def reply(self, answer):
+
+        self.conversation.add(
+            "assistant",
+            answer
+        )
+
+        return answer
 
     def process(self, user_input):
+        
+        self.conversation.add(
+            "user",
+            user_input
+        )
+    # 1. Try tools
+        for tool in self.tools.all().values():
 
-    # 1. Try modules
-        for module in self.modules.values():
-
-            if module.can_handle(user_input):
-                return module.handle(user_input)
+            if tool.can_handle(user_input):
+                return tool.handle(user_input)
 
     # 2. Try built-in commands
         response = handle_command(user_input, self.memory)
 
         if response != "I don't understand.":
-            return response
+            return self.reply(response)
 
     # 3. Understand the user's intent
         intent = self.ai.understand(user_input)
@@ -38,7 +52,9 @@ class Agent:
 
             nice_key = intent["key"].replace("_", " ")
 
-            return f"I'll remember that your {nice_key} is {intent['value']}."
+            answer = f"I'll remember that your {nice_key} is {intent['value']}."
+
+            return self.reply(answer)
 
     # 5. Recall memory
         if intent["intent"] == "recall":
@@ -49,62 +65,45 @@ class Agent:
 
                 nice_key = memory["key"].replace("_", " ")
 
-                return f"Your {nice_key} is {memory['value']}."
+                answer = f"Your {nice_key} is {memory['value']}."
 
-            return "I don't remember that yet."
+                return self.reply(answer)
         
+        # Weather
         if intent["intent"] == "weather":
 
-            weather = self.modules["weather"]
+            weather = self.tools.get("weather")
 
             weather_data = weather.get_weather(intent["city"])
 
-            prompt = f"""
-            You are Nann.
+            answer = self.ai.answer_weather(
+                user_input,
+                weather_data
+            )
 
-            You already have the weather information below.
+            return self.reply(answer)
 
-            Do NOT say you don't have access to live weather.
-            Do NOT tell the user to check another website.
-            Do NOT mention limitations.
-
-            Your job is ONLY to answer using the provided weather information.
-
-            Weather Information:
-
-            {weather_data}
-
-            User Question:
-
-            {user_input}
-
-            Answer naturally in one short paragraph.
-            """
-
-            return self.ai.ask(prompt)
-        
+# Internet
         if intent["intent"] == "internet":
 
-            internet = self.modules["internet"]
+            internet = self.tools.get("internet")
 
             search_result = internet.search(intent["query"])
 
-            prompt = f"""
-            The user asked:
+            answer = self.ai.answer_search(
+                user_input,
+                search_result
+            )
 
-            {user_input}
+            return self.reply(answer)
 
-            Search result:
+# Normal conversation
+        context = self.context.build()
 
-            {search_result}
+        answer = self.ai.answer_normal(
+            user_input,
+            context
+        )
 
-            Answer naturally as Nann.
-            Use only the information above.
-            If the search result says nothing was found,
-            tell the user honestly.
-            """
+        return self.reply(answer)
 
-            return self.ai.ask(prompt)
-
-    # 6. Normal AI conversation
-        return self.ai.handle(user_input)

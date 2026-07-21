@@ -3,5 +3,10 @@
         "category": "preference",
         "key": "favorite_language",
         "value": "Python"
+    },
+    {
+        "category": "test",
+        "key": "test_is_working",
+        "value": "true"
     }
 ]

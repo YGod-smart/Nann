@@ -1,7 +1,7 @@
 from ai_engine import Ai
 from module_loader import ModuleLoader
 from agent import Agent
-
+from conversation_memory import ConversationMemory
 
 class Brain:
 
@@ -12,14 +12,17 @@ class Brain:
         self.ai = Ai()
 
         loader = ModuleLoader()
-        self.modules = loader.load_modules()
+        self.tools = loader.load_modules()
+        
+        self.conversation = ConversationMemory()
 
         #print(type(self.modules))  # temporary test
 
         self.agent = Agent(
             self.ai,
             self.memory,
-            self.modules
+            self.tools,
+            self.conversation
         )
 
     def think(self, user_input):
